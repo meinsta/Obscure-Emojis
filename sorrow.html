@@ -11,62 +11,55 @@
 
 
 <body>
-    <div id="contentbox">
-        <div class="example-outer"><div class="example-inner"><img src="http://getdango.com/img/loader.gif" class="loader" alt="load"><div id="resultbox">😌😎👌👍</div></div></div>
-        <input type="text" id="qbox" class="form" value="This is pretty cool">
-
+  <div id="input">
+    <div class="definition">
     </div>
+    <div class="emoji">
+    </div>
+  </div>
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script>
     var api_server = "https://api.getdango.com";
-$(document).ready(function() {
-    $("#qbox").keyup(function(e) {
 
-        var new_width = ((e.target.value.length + 1) * 16);
-        e.target.style.width = new_width + 'px';
-    });
+    var string = "a state of exhaustion inspired by an act of senseless violence, which forces you to revise your image of what can happen in this world—mending the fences of your expectations, weeding out invasive truths, cultivating the perennial good that’s buried under the surface—before propping yourself up in the middle of it like an old scarecrow, who’s bursting at the seams but powerless to do anything but stand there and watch.";
+
+    var array = string.split(/[,—]+/);
 
     function do_query(text) {
 
-        var endsWithText = /[a-z0-9] *$/i;
-        if (text != "" && text.match(endsWithText)) {
-            text += ".";
-        }
-        if (this.timeoutId) {
-              window.clearTimeout(this.timeoutId);
-        }
-        $(".loader").show();
-        $("#resultbox").text("");
+      var endsWithText = /[a-z0-9] *$/i;
+      if (text != "" && text.match(endsWithText)) {
+        text += ".";
+      }
 
-        this.timeoutId = window.setTimeout(function () {
-            $.getJSON(api_server + "/api/emoji", {q: text}, function(response) {
+      $(".loader").show();
 
+      this.timeoutId = window.setTimeout(function () {
+        $.getJSON(api_server + "/api/emoji", {q: text}, function(response) {
 
+          if (response['results'] !== undefined) {
+            var resultString = "";
 
 
-                if (response['results'] !== undefined) {
-                    var resultString = "";
+            for (var i = 0; i < 10; i++) {
+              resultString += response['results'][i].text + "";
+            }
 
 
-                    for (var i = 0; i < 4; i++) {
-                        resultString += response['results'][i].text + "";
-                    }
-
-
-                    $(".loader").hide();
-                    $("#resultbox").text(resultString);
-                }
-            })
-        }, 200);
+            $(".loader").hide();
+            $(".emoji").append(resultString);
+          }
+        })
+      }, 200);
 
     }
-    $("#qbox").on('input', function() {
-        var text = this.value;
-        do_query(text);
-    });
+    console.log(array);
+    for(j=0; j<array.length; j++ ){
+    $(".definition").append(array[j]);
+    do_query(array[j]);
+    }
 
-});
 </script>
 
 
