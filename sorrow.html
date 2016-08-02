@@ -1,0 +1,73 @@
+<html><head>
+    <meta charset="utf-8">
+<title></title>
+<style>
+.loader{
+  display: none;
+}
+</style>
+</head>
+
+
+
+<body>
+    <div id="contentbox">
+        <div class="example-outer"><div class="example-inner"><img src="http://getdango.com/img/loader.gif" class="loader" alt="load"><div id="resultbox">😌😎👌👍</div></div></div>
+        <input type="text" id="qbox" class="form" value="This is pretty cool">
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script>
+    var api_server = "https://api.getdango.com";
+$(document).ready(function() {
+    $("#qbox").keyup(function(e) {
+
+        var new_width = ((e.target.value.length + 1) * 16);
+        e.target.style.width = new_width + 'px';
+    });
+
+    function do_query(text) {
+
+        var endsWithText = /[a-z0-9] *$/i;
+        if (text != "" && text.match(endsWithText)) {
+            text += ".";
+        }
+        if (this.timeoutId) {
+              window.clearTimeout(this.timeoutId);
+        }
+        $(".loader").show();
+        $("#resultbox").text("");
+
+        this.timeoutId = window.setTimeout(function () {
+            $.getJSON(api_server + "/api/emoji", {q: text}, function(response) {
+
+
+
+
+                if (response['results'] !== undefined) {
+                    var resultString = "";
+
+
+                    for (var i = 0; i < 4; i++) {
+                        resultString += response['results'][i].text + "";
+                    }
+
+
+                    $(".loader").hide();
+                    $("#resultbox").text(resultString);
+                }
+            })
+        }, 200);
+
+    }
+    $("#qbox").on('input', function() {
+        var text = this.value;
+        do_query(text);
+    });
+
+});
+</script>
+
+
+</body></html>
