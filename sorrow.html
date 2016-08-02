@@ -20,45 +20,38 @@
 
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script>
-    var api_server = "https://api.getdango.com";
+  var api_server = "https://api.getdango.com";
 
-    var string = "a state of exhaustion inspired by an act of senseless violence, which forces you to revise your image of what can happen in this world—mending the fences of your expectations, weeding out invasive truths, cultivating the perennial good that’s buried under the surface—before propping yourself up in the middle of it like an old scarecrow, who’s bursting at the seams but powerless to do anything but stand there and watch.";
+  var string = "a state of exhaustion inspired by an act of senseless violence, which forces you to revise your image of what can happen in this world—mending the fences of your expectations, weeding out invasive truths, cultivating the perennial good that’s buried under the surface—before propping yourself up in the middle of it like an old scarecrow, who’s bursting at the seams but powerless to do anything but stand there and watch.";
 
-    var array = string.split(/[,—]+/);
+  var array = string.split(/[,—]+/);
 
-    function do_query(text) {
+  function do_query(text) {
 
-      var endsWithText = /[a-z0-9] *$/i;
-      if (text != "" && text.match(endsWithText)) {
-        text += ".";
-      }
+    var endsWithText = /[a-z0-9] *$/i;
+    if (text != "" && text.match(endsWithText)) {
+      text += ".";
+    }
 
-      $(".loader").show();
+      $.getJSON(api_server + "/api/emoji", {q: text}, function(response) {
 
-      this.timeoutId = window.setTimeout(function () {
-        $.getJSON(api_server + "/api/emoji", {q: text}, function(response) {
-
-          if (response['results'] !== undefined) {
-            var resultString = "";
+        if (response['results'] !== undefined) {
+          var resultString = "";
 
 
-            for (var i = 0; i < 10; i++) {
-              resultString += response['results'][i].text + "";
-            }
-
-
-            $(".loader").hide();
-            $(".emoji").append(resultString);
+          for (var i = 0; i < 10; i++) {
+            resultString += response['results'][i].text + "";
           }
-        })
-      }, 200);
+          $(".emoji").append(resultString);
+        }
+      })
+  }
 
-    }
-    console.log(array);
-    for(j=0; j<array.length; j++ ){
-    $(".definition").append(array[j]);
-    do_query(array[j]);
-    }
+  $.each(array, function (index, value) {
+    console.log(value);
+    $(".definition").append(value);
+    return do_query(value);
+  });
 
 </script>
 
