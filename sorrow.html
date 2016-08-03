@@ -42,11 +42,7 @@
 
 
   $( document ).ready(function() {
-      var api_server = "https://api.getdango.com";
-      function do_query(text) {
-
-
-        }
+          var api_server = "https://api.getdango.com";
           var key = "api_key=xBcVPLfdDKpH0GjMCd1whW7rPoYkzLgZD3ZwpzndISFI4huSpA";
           var api = "https://api.tumblr.com/v2/blog/dictionaryofobscuresorrows.tumblr.com/";
           var retrieve_more = function (offset) {
@@ -74,7 +70,7 @@
                               for (var i = 0; i < 10; i++) {
                                 resultString += response['results'][i].text + "";
                               }
-                              $("#Posts ul").append('<li><strong>'+title+'</strong> ' + content + '<div class="emoji" id='+i+'>'+resultString+'</div></li>');
+                              $("#Posts ul").append('<li><strong>'+title+'</strong> ' + content + '<div class="emoji">'+resultString+'</div></li>');
 
                             }
                           })
