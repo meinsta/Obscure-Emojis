@@ -11,20 +11,13 @@
 
 
 <body>
-  <div id="input">
-    <div class="definition">
-    </div>
-    <div class="emoji">
-    </div>
-  </div>
+  <div id="Posts"><ul></ul></div>
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script>
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script>
   var api_server = "https://api.getdango.com";
 
-  var string = "a state of exhaustion inspired by an act of senseless violence, which forces you to revise your image of what can happen in this world—mending the fences of your expectations, weeding out invasive truths, cultivating the perennial good that’s buried under the surface—before propping yourself up in the middle of it like an old scarecrow, who’s bursting at the seams but powerless to do anything but stand there and watch.";
-
-  var array = string.split(/[,—]+/);
 
   function do_query(text) {
 
@@ -47,12 +40,57 @@
       })
   }
 
-  $.each(array, function (index, value) {
-    console.log(value);
-    $(".definition").append(value);
-    return do_query(value);
-  });
 
+  $( document ).ready(function() {
+      var api_server = "https://api.getdango.com";
+      function do_query(text) {
+
+
+        }
+          var key = "api_key=xBcVPLfdDKpH0GjMCd1whW7rPoYkzLgZD3ZwpzndISFI4huSpA";
+          var api = "https://api.tumblr.com/v2/blog/dictionaryofobscuresorrows.tumblr.com/";
+          var retrieve_more = function (offset) {
+              $.getJSON(api + "posts/text?callback=?&filter=text&limit=20&offset=" + offset + "&" + key,function(data) {
+                  $.each(data.response.posts, function(i, item) {
+                      var title = item.title;
+                      var content = item.body;
+                      var text = content.toString();
+
+                      if (title.match("^Q:") || title.match("^frequently asked questions") || title == "") {
+
+                          }
+                      else{
+                        var endsWithText = /[a-z0-9] *$/i;
+                        if (text != "" && text.match(endsWithText)) {
+                          text += ".";
+                        }
+
+                          $.getJSON(api_server + "/api/emoji", {q: text}, function(response) {
+
+                            if (response['results'] !== undefined) {
+                              var resultString = "";
+
+
+                              for (var i = 0; i < 10; i++) {
+                                resultString += response['results'][i].text + "";
+                              }
+                              $("#Posts ul").append('<li><strong>'+title+'</strong> ' + content + '<div class="emoji" id='+i+'>'+resultString+'</div></li>');
+
+                            }
+                          })
+
+                      }
+
+                  });
+
+                  if (data.response.posts.length == 20) {
+                      retrieve_more(offset + 20);
+                  }
+              });
+          };
+
+          retrieve_more(0);
+    });
 </script>
 
 
