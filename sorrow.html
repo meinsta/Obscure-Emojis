@@ -119,12 +119,12 @@ font-family: arial;
 
 setInterval(function() {
   $('#Posts div:first')
-    .fadeOut(1000)
+    .fadeOut(0)
     .next()
-    .fadeIn(1000).css("display","flex")
+    .fadeIn(4000).css("display","flex")
     .end()
     .appendTo('#Posts');
-},  10000);
+},  40000);
 
 </script>
 
