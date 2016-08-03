@@ -2,30 +2,43 @@
     <meta charset="utf-8">
 <title></title>
 <style>
-#Posts {
-    margin: 50px auto;
-    position: relative;
-    width: 240px;
-    height: 240px;
-    padding: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+
+body{
+  background-image: url(obscure-background.png);
+background-size: contain;
+background-repeat: no-repeat;
+font-family: arial;
 }
 
-#Posts > div {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    display: none;
+
+#Posts .container{
+  position: absolute;
+  flex-direction: row;
+  margin-top: 8vw;
+  margin-left: 2vw;
+  display: none;
 }
+
+.emoji.child{
+  font-size: 4vw;
+  text-align: center;
+}
+.definition.child{
+  font-size: 1vw;
+}
+
+.child{
+  width: 45%;
+}
+
 </style>
 </head>
 
 
 
 <body>
-  <div id="Posts"></div>
+
+  <div id="Posts" class="main-container"></div>
 
 
   <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -84,7 +97,7 @@
                               for (var i = 0; i < 10; i++) {
                                 resultString += response['results'][i].text + "";
                               }
-                              $("#Posts").append('<div><strong>'+title+'</strong> ' + content + '<div class="emoji">'+resultString+'</div></div>');
+                              $("#Posts").append('<div class="container"><div class="definition child"><strong>'+title+'</strong> ' + content + '</div><div class="emoji child">'+resultString+'</div></div>');
 
                             }
                           })
@@ -108,7 +121,7 @@ setInterval(function() {
   $('#Posts div:first')
     .fadeOut(1000)
     .next()
-    .fadeIn(1000)
+    .fadeIn(1000).css("display","flex")
     .end()
     .appendTo('#Posts');
 },  10000);
