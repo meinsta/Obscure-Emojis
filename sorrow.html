@@ -2,8 +2,22 @@
     <meta charset="utf-8">
 <title></title>
 <style>
-.loader{
-  display: none;
+#Posts {
+    margin: 50px auto;
+    position: relative;
+    width: 240px;
+    height: 240px;
+    padding: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+#Posts > div {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    display: none;
 }
 </style>
 </head>
@@ -11,7 +25,7 @@
 
 
 <body>
-  <div id="Posts"><ul></ul></div>
+  <div id="Posts"></div>
 
 
   <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
@@ -70,7 +84,7 @@
                               for (var i = 0; i < 10; i++) {
                                 resultString += response['results'][i].text + "";
                               }
-                              $("#Posts ul").append('<li><strong>'+title+'</strong> ' + content + '<div class="emoji">'+resultString+'</div></li>');
+                              $("#Posts").append('<div><strong>'+title+'</strong> ' + content + '<div class="emoji">'+resultString+'</div></div>');
 
                             }
                           })
@@ -87,6 +101,18 @@
 
           retrieve_more(0);
     });
+
+    $("#Posts > div:gt(0)").hide();
+
+setInterval(function() {
+  $('#Posts div:first')
+    .fadeOut(1000)
+    .next()
+    .fadeIn(1000)
+    .end()
+    .appendTo('#Posts');
+},  10000);
+
 </script>
 
 
