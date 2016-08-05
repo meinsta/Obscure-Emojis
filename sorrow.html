@@ -14,13 +14,13 @@ font-family: arial;
 #Posts .container{
   position: absolute;
   flex-direction: row;
-  margin-top: 7.5vw;
+  margin-top: 6.5vw;
   margin-left: 2vw;
   display: none;
 }
 
 .emoji.child{
-  font-size: 4vw;
+  font-size: 3vw;
   text-align: center;
 }
 .definition.child{
@@ -31,13 +31,20 @@ font-family: arial;
   width: 44%;
 }
 
+.link{
+  position: relative;
+left: 60vw;
+top: 7vh;
+color: transparent;
+}
+
 </style>
 </head>
 
 
 
 <body>
-
+<a href="#" onclick="nextOne()" class="link">translate</a>
   <div id="Posts" class="main-container"></div>
 
 
@@ -117,14 +124,14 @@ font-family: arial;
 
     $("#Posts > div:gt(0)").hide();
 
-setInterval(function() {
+function nextOne(){
   $('#Posts div:first')
     .fadeOut(0)
     .next()
-    .fadeIn(4000).css("display","flex")
+    .fadeIn(1000).css("display","flex")
     .end()
     .appendTo('#Posts');
-},  40000);
+};
 
 </script>
 
